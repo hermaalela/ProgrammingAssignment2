@@ -16,14 +16,14 @@ makeCacheMatrix <- function(x) {
         ##        
         ##  not, it computes, caches, and returns it. thats the gist of this.
         ## http://stackoverflow.com/questions/25374803/returning-the-inverse-matrix-from-a-cached-object-in-r-checking-that-input-matri
-        inv <- NULL
+        m_inv <- NULL
         set <- function(y) {
                 x <<- y
-                inv <<- NULL
+                m_inv <<- NULL
         }
         get <- function() x
-        setinverse <- function(inverse) inv <<- inverse
-        getinverse <- function() inv
+        setinverse <- function(inverse) m_inv <<- inverse
+        getinverse <- function() m_inv
         list(set=set, get=get, setinverse=setinverse, getinverse=getinverse)
 
 }
@@ -38,13 +38,13 @@ makeCacheMatrix <- function(x) {
 
 cacheSolve <- function(x, ...) {
         ## Return a matrix that is the inv_merse of 'x'
-        inv <- x$getinverse()
-        if(!is.null(inv)) {
+        m_inv <- x$getinverse()
+        if(!is.null(m_inv)) {
                 message("getting cached data.")
-                return(inv)
+                return(m_inv)
         }
         data <- x$get()
-        inv <- solve(data)
-        x$setinverse(inv)
-        inv
+        m_inv <- solve(data)
+        x$setinverse(m_inv)
+        m_inv
 }
